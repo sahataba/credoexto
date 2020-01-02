@@ -11,7 +11,7 @@ import com.example.emmanuelozibo.todolistapp.data.local.TodoListDatabase
 import com.example.emmanuelozibo.todolistapp.data.local.models.Todo
 import kotlinx.android.synthetic.main.activity_main.*
 
-class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener{
+class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener {
 
 
     private var todoDatabase: TodoListDatabase? = null
@@ -24,6 +24,9 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener{
         todoDatabase = TodoListDatabase.getInstance(this)
         todoAdapter = TodoAdapter()
         todoAdapter?.setTodoItemClickedListener(this)
+
+        val todoItemDecoration = TodoItemDecoration(10)
+        todo_rv.addItemDecoration(todoItemDecoration)
 
         add_todo.setOnClickListener { startActivity(Intent(this, AddTodoActivity::class.java)) }
 
