@@ -44,9 +44,9 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
     override fun onTodoItemClicked(todo: Todo) {
         val intent = Intent(this, AddTodoActivity::class.java)
         intent.putExtra("tId", todo.tId)
-        intent.putExtra("title", todo.title)
-        intent.putExtra("priority", todo.priority)
-        intent.putExtra("detail", todo.detail)
+        //intent.putExtra("title", todo.title)
+        //intent.putExtra("priority", todo.priority)
+        //intent.putExtra("detail", todo.detail)
         startActivity(intent)
     }
 
@@ -56,9 +56,9 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
                     if (which==0){
                         val intent = Intent(this@TodoActivity, AddTodoActivity::class.java)
                         intent.putExtra("tId", todo.tId)
-                        intent.putExtra("title", todo.title)
-                        intent.putExtra("priority", todo.priority)
-                        intent.putExtra("detail", todo.detail)
+                        //intent.putExtra("title", todo.title)
+                        //intent.putExtra("priority", todo.priority)
+                        //intent.putExtra("detail", todo.detail)
                         startActivity(intent)
                     }else{
                         todoDatabase?.getTodoDao()?.removeTodo(todo)

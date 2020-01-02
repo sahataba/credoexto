@@ -36,9 +36,9 @@ class TodoAdapter(var todoList: List<Todo>? = ArrayList<Todo>()): RecyclerView.A
     inner class TodoViewHolder(val view: View, val todoList: List<Todo>): RecyclerView.ViewHolder(view){
         fun onBindViews(position: Int){
             if (itemCount != 0){
-                view.findViewById<TextView>(R.id.title).text = todoList.get(position).title
-                view.findViewById<TextView>(R.id.first_letter).text = todoList.get(position).title.first().toUpperCase().toString()
-                view.findViewById<ImageView>(R.id.priority_imgView).setImageResource(getImage(todoList.get(position).priority))
+                view.findViewById<TextView>(R.id.name).text = todoList.get(position).name
+                view.findViewById<TextView>(R.id.start).text = todoList.get(position).start.toString()
+                view.findViewById<TextView>(R.id.end).text = todoList.get(position).end.toString()
             }
 
         }

@@ -7,10 +7,12 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "todo")
 class Todo(
-        @ColumnInfo(name = "todo_title")
-        var title:String = "",
-        @ColumnInfo(name = "todo_priority")
-        var priority: Int = 0,
-        @PrimaryKey(autoGenerate = true) var tId: Int = 0){
-    var detail: String = ""
-}
+        @ColumnInfo(name = "name")
+        var name:String = "",
+        @ColumnInfo(name = "start")
+        var start: Long = 0,
+        @ColumnInfo(name = "end")
+        var end: Long = 0,
+        @ColumnInfo(name = "tag")
+        var tag: String = "",
+        @PrimaryKey(autoGenerate = true) var tId: Int = 0)
