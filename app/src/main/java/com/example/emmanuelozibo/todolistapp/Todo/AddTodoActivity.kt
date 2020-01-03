@@ -24,8 +24,9 @@ class AddTodoActivity: AppCompatActivity() {
 
         todoDatabase = TodoListDatabase.getInstance(this)
 
-        val title = intent.getStringExtra("title")
-        if (title == null || title == ""){
+        val tId = intent.getIntExtra("tId", 0)
+
+        if (tId == 0){
             add_todo.setOnClickListener{
                 val todo = Todo(
                         name_ed.text.toString(),
@@ -38,8 +39,11 @@ class AddTodoActivity: AppCompatActivity() {
             }
         }else{
             add_todo.text = getString(R.string.update)
-            val tId = intent.getIntExtra("tId", 0)
-            name_ed.setText(title)
+            val item = todoDatabase!!.getTodoDao().getTodoItem(tId)
+            name_ed.setText(item.name)
+            start_ed.setText(item.start.toString())
+            end_ed.setText(item.end.toString())
+            tag_ed.setText(item.tag)
             add_todo.setOnClickListener {
                 val todo = Todo(
                         name_ed.text.toString(),

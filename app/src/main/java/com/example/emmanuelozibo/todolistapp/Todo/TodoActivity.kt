@@ -49,23 +49,11 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
     }
 
     override fun onTodoItemClicked(todo: Todo) {
-        val intent = Intent(this, AddTodoActivity::class.java)
-        intent.putExtra("tId", todo.tId)
-        //intent.putExtra("title", todo.title)
-        //intent.putExtra("priority", todo.priority)
-        //intent.putExtra("detail", todo.detail)
-        startActivity(intent)
-    }
-
-    override fun onTodoItemLongClicked(todo: Todo) {
         val alertDialog = AlertDialog.Builder(this)
                 .setItems(R.array.dialog_list, DialogInterface.OnClickListener { dialog, which ->
                     if (which==0){
                         val intent = Intent(this@TodoActivity, AddTodoActivity::class.java)
                         intent.putExtra("tId", todo.tId)
-                        //intent.putExtra("title", todo.title)
-                        //intent.putExtra("priority", todo.priority)
-                        //intent.putExtra("detail", todo.detail)
                         startActivity(intent)
                     }else{
                         todoDatabase?.getTodoDao()?.removeTodo(todo)
@@ -76,7 +64,5 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
                 .create()
         alertDialog.show()
     }
-
-
 
 }

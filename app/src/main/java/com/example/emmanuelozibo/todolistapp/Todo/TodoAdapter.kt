@@ -60,6 +60,5 @@ class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerV
 
     interface OnTodoItemClickedListener{
         fun onTodoItemClicked(todo: Todo)
-        fun onTodoItemLongClicked(todo: Todo)
     }
 }
