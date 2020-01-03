@@ -24,14 +24,28 @@ class TodoItemDecoration(var spacing: Int) : RecyclerView.ItemDecoration() {
         val padd = startView?.y!!
 
         val adapter = parent.adapter as TodoAdapter
+
+        val windowStartX = 100f
+        val windowEndX = 200f
+
         val tags = adapter.getTags()
+        val keys = tags!!.keys
 
-        val h: Float = ((startView?.measuredHeight)?.toFloat()) ?: 0f
-        val sY = h * (start - start) + h/2 + padd
-        val eY = h * (end - start) + h/2 + padd
+        for ((key, value) in tags!!) {
+
+            val w = (windowEndX - windowStartX) / keys.size
+
+            val i = keys.indexOf(key)
+
+            val X = windowStartX + i * w
+
+            val h: Float = ((startView?.measuredHeight)?.toFloat()) ?: 0f
+            val sY = h * (start - start) + h/2 + padd
+            val eY = h * (end - start) + h/2 + padd
 
 
-        c?.drawLine(100f, sY, 100f, eY,  paint)
+            c?.drawLine(X, sY, X, eY,  paint)
+        }
 
     }
 }
