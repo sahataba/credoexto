@@ -15,29 +15,32 @@ class TodoItemDecoration(var spacing: Int) : RecyclerView.ItemDecoration() {
         paint.color = Color.BLUE
 
         val lm = parent!!.layoutManager!! as LinearLayoutManager
-        val start = lm.findFirstVisibleItemPosition()
-        val end = lm.findLastVisibleItemPosition()
 
-        val startView: View? = parent.getChildAt(start)
-        val endView = parent.getChildAt(end)
-
-        val padd = startView?.y!!
 
         val adapter = parent.adapter as TodoAdapter
 
-        val windowStartX = 100f
-        val windowEndX = 200f
+        val windowStartX = 800f
+        val windowEndX = 900f
 
         val tags = adapter.getTags()
         val keys = tags!!.keys
 
+        val startI = lm.findFirstVisibleItemPosition()
+        val endI = lm.findLastVisibleItemPosition()
+
         for ((key, value) in tags!!) {
+
+            val start = Math.max(startI, value.min()!!)
+            val end = Math.min(endI, value.max()!!)
 
             val w = (windowEndX - windowStartX) / keys.size
 
             val i = keys.indexOf(key)
 
             val X = windowStartX + i * w
+
+            val startView: View? = parent.getChildAt(start)
+            val padd = startView?.y!!
 
             val h: Float = ((startView?.measuredHeight)?.toFloat()) ?: 0f
             val sY = h * (start - start) + h/2 + padd
