@@ -18,7 +18,7 @@ interface TodoDao{
 
 
     @Query("SELECT*FROM todo WHERE tId=:tid")
-    fun getTodoItem(tid: Int): Todo
+    fun getTodoItem(tid: Long): Todo
     /**
      * @param todo is what we want to save in our database
      * so many conflict can occur when a data is to be saved, the strategy is used to handle such conflicts
@@ -28,7 +28,7 @@ interface TodoDao{
      * others includes fail, and roolback
      * */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveTodo(todo: Todo)
+    fun saveTodo(todo: Todo): Long
 
     @Update
     fun updateTodo(todo: Todo)

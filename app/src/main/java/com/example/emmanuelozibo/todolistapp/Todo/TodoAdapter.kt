@@ -10,7 +10,7 @@ import com.example.emmanuelozibo.todolistapp.R
 import com.example.emmanuelozibo.todolistapp.data.local.models.Todo
 import java.util.ArrayList
 
-class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
+class TodoAdapter(val todoList: ArrayList<Todo>): RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
 
     private var onTodoItemClickedListener: OnTodoItemClickedListener?= null
 
@@ -26,10 +26,6 @@ class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerV
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int){
         holder.view.setOnClickListener{onTodoItemClickedListener!!.onTodoItemClicked(todoList!!.get(position))}
-        /*holder.view.setOnLongClickListener{
-            onTodoItemClickedListener!!.onTodoItemLongClicked(todoList!!.get(position))
-            true
-        }*/
         holder.onBindViews(position)
     }
 
@@ -42,8 +38,6 @@ class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerV
             }
 
         }
-        private fun getImage(priority: Int): Int
-        = if (priority == 1) R.drawable.low_priority else if(priority == 2) R.drawable.medium_priority else R.drawable.high_priority
     }
 
     fun swap (a: Int, b: Int) {
@@ -52,6 +46,28 @@ class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerV
         todoList?.set(b, _a!!)
         todoList?.set(a, _b!!)
         this.notifyDataSetChanged()
+    }
+
+    fun remove(todo: Todo) {
+        val i = todoList?.indexOf(todo)
+        todoList?.removeAt(i)
+        this.notifyDataSetChanged()
+    }
+
+
+    fun updateTodo(todo: Todo) {
+        val i = todoList?.indexOfFirst{it.tId == todo.tId}
+        todoList?.set(i, todo)
+        this.notifyDataSetChanged()
+    }
+
+    fun saveTodo(todo: Todo) {
+        todoList?.add(todo)
+        this.notifyDataSetChanged()
+    }
+
+    fun getTags(): Map<String, List<Int>>? {
+        return todoList?.groupBy({ it.tag }, {todoList.indexOf(it)})
     }
 
     fun setTodoItemClickedListener(onTodoItemClickedListener: OnTodoItemClickedListener){

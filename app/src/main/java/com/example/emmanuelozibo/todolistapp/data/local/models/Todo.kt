@@ -15,4 +15,4 @@ class Todo(
         var end: Long = 0,
         @ColumnInfo(name = "tag")
         var tag: String = "",
-        @PrimaryKey(autoGenerate = true) var tId: Int = 0)
+        @PrimaryKey(autoGenerate = true) var tId: Long = 0)

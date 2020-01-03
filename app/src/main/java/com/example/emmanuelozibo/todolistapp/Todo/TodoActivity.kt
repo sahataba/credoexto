@@ -23,8 +23,17 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         setContentView(R.layout.activity_main)
 
         todoDatabase = TodoListDatabase.getInstance(this)
-        todoAdapter = TodoAdapter()
+
+        val list = todoDatabase?.getTodoDao()?.getTodoList()
+        val arrayList: ArrayList<Todo> = ArrayList<Todo>(list!!.size)
+        arrayList.addAll(list)
+
+        todoAdapter = TodoAdapter(arrayList)
         todoAdapter?.setTodoItemClickedListener(this)
+
+        todo_rv.adapter = todoAdapter
+        todo_rv.layoutManager = LinearLayoutManager(this)
+        todo_rv.hasFixedSize()
 
         val dragAndDrop = ItemTouchHelper(DragDropHandler(todoAdapter!!, ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), ItemTouchHelper.LEFT))
         val todoItemDecoration = TodoItemDecoration(10)
@@ -32,20 +41,8 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         todo_rv.addItemDecoration(todoItemDecoration)
         dragAndDrop.attachToRecyclerView(todo_rv)
 
-        add_todo.setOnClickListener { startActivity(Intent(this, AddTodoActivity::class.java)) }
+        add_todo.setOnClickListener { startActivityForResult(Intent(this, AddTodoActivity::class.java), 2) }
 
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        val list = todoDatabase?.getTodoDao()?.getTodoList()
-        val arrayList: ArrayList<Todo> = ArrayList<Todo>(list!!.size)
-        arrayList.addAll(list)
-        todoAdapter?.todoList=arrayList
-        todo_rv.adapter = todoAdapter
-        todo_rv.layoutManager = LinearLayoutManager(this)
-        todo_rv.hasFixedSize()
     }
 
     override fun onTodoItemClicked(todo: Todo) {
@@ -54,15 +51,43 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
                     if (which==0){
                         val intent = Intent(this@TodoActivity, AddTodoActivity::class.java)
                         intent.putExtra("tId", todo.tId)
-                        startActivity(intent)
+                        startActivityForResult(intent, 2)
                     }else{
                         todoDatabase?.getTodoDao()?.removeTodo(todo)
-                        onResume()
+                        todoAdapter?.remove(todo)
                     }
                     dialog.dismiss()
                 })
                 .create()
         alertDialog.show()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int,  data: Intent)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        //todo handler result code
+        if(requestCode==2)
+        {
+            val tId = data.getLongExtra("tId", 0L)
+            val todo = Todo(
+                    data.getStringExtra("name"),
+                    data.getStringExtra("start").toLong(),
+                    data.getStringExtra("end").toLong(),
+                    data.getStringExtra("tag"),
+                    tId
+                    )
+
+            if(tId == 0L) {
+                val tId = todoDatabase?.getTodoDao()?.saveTodo(todo)
+                todo.tId = tId!!
+                todoAdapter?.saveTodo(todo)
+            } else {
+                todoDatabase?.getTodoDao()?.updateTodo(todo)
+                todoAdapter?.updateTodo(todo)
+            }
+        }
     }
 
 }
