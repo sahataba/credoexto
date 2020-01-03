@@ -10,7 +10,7 @@ import com.example.emmanuelozibo.todolistapp.R
 import com.example.emmanuelozibo.todolistapp.data.local.models.Todo
 import java.util.ArrayList
 
-class TodoAdapter(var todoList: List<Todo>? = ArrayList<Todo>()): RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
+class TodoAdapter(var todoList: ArrayList<Todo>? = ArrayList<Todo>()): RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
 
     private var onTodoItemClickedListener: OnTodoItemClickedListener?= null
 
@@ -26,10 +26,10 @@ class TodoAdapter(var todoList: List<Todo>? = ArrayList<Todo>()): RecyclerView.A
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int){
         holder.view.setOnClickListener{onTodoItemClickedListener!!.onTodoItemClicked(todoList!!.get(position))}
-        holder.view.setOnLongClickListener{
+        /*holder.view.setOnLongClickListener{
             onTodoItemClickedListener!!.onTodoItemLongClicked(todoList!!.get(position))
             true
-        }
+        }*/
         holder.onBindViews(position)
     }
 
@@ -44,6 +44,14 @@ class TodoAdapter(var todoList: List<Todo>? = ArrayList<Todo>()): RecyclerView.A
         }
         private fun getImage(priority: Int): Int
         = if (priority == 1) R.drawable.low_priority else if(priority == 2) R.drawable.medium_priority else R.drawable.high_priority
+    }
+
+    fun swap (a: Int, b: Int) {
+        val _a = todoList?.get(a)
+        val _b = todoList?.get(b)
+        todoList?.set(b, _a!!)
+        todoList?.set(a, _b!!)
+        this.notifyDataSetChanged()
     }
 
     fun setTodoItemClickedListener(onTodoItemClickedListener: OnTodoItemClickedListener){
