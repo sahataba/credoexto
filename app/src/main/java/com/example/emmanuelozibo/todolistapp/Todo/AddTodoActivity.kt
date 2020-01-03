@@ -2,10 +2,8 @@ package com.example.emmanuelozibo.todolistapp.Todo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.RadioGroup
 import com.example.emmanuelozibo.todolistapp.R
 import com.example.emmanuelozibo.todolistapp.data.local.TodoListDatabase
 import com.example.emmanuelozibo.todolistapp.data.local.models.Todo
@@ -14,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_add_todo.*
 class AddTodoActivity: AppCompatActivity() {
 
     private var todoDatabase: TodoListDatabase? = null
-    private var priority = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
