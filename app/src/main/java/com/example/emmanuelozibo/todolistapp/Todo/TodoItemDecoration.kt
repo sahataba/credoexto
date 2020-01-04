@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
-class TodoItemDecoration(var spacing: Int) : RecyclerView.ItemDecoration() {
+class TodoItemDecoration : RecyclerView.ItemDecoration() {
     override fun onDrawOver(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.onDraw(c, parent, state)
 

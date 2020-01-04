@@ -36,7 +36,7 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         todo_rv.hasFixedSize()
 
         val dragAndDrop = ItemTouchHelper(DragDropHandler(todoAdapter!!, ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), ItemTouchHelper.LEFT))
-        val todoItemDecoration = TodoItemDecoration(10)
+        val todoItemDecoration = TodoItemDecoration()
 
         todo_rv.addItemDecoration(todoItemDecoration)
         dragAndDrop.attachToRecyclerView(todo_rv)
