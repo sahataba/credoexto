@@ -26,12 +26,11 @@ class TodoItemDecoration : RecyclerView.ItemDecoration() {
         val keys = tags!!.keys
 
         val startI = lm.findFirstVisibleItemPosition()
-        val endI = lm.findLastVisibleItemPosition()
 
         for ((key, value) in tags!!) {
 
-            val start = Math.max(startI, value.min()!!)
-            val end = Math.min(endI, value.max()!!)
+            val start = value.min()!!
+            val end = value.max()!!
 
             val w = (windowEndX - windowStartX) / keys.size
 
@@ -39,12 +38,13 @@ class TodoItemDecoration : RecyclerView.ItemDecoration() {
 
             val X = windowStartX + i * w
 
-            val startView: View? = parent.getChildAt(start)
+            val startView: View? = parent.getChildAt(0)
+
             val padd = startView?.y!!
 
             val h: Float = ((startView?.measuredHeight)?.toFloat()) ?: 0f
-            val sY = h * (start - start) + h/2 + padd
-            val eY = h * (end - start) + h/2 + padd
+            val sY = h * (start - startI) + h/2 + padd
+            val eY = h * (end - startI) + h/2 + padd
 
 
             c?.drawLine(X, sY, X, eY,  paint)
