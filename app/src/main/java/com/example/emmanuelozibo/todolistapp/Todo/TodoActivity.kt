@@ -36,7 +36,7 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         todo_rv.hasFixedSize()
 
         //todo: bug with reordering only by 1 position
-        val dragAndDrop = ItemTouchHelper(DragDropHandler(todoAdapter!!, ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), ItemTouchHelper.LEFT))
+        val dragAndDrop = ItemTouchHelper(DragDropHandler(todoAdapter!!, ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), -1))
         val todoItemDecoration = TodoItemDecoration()
 
         todo_rv.addItemDecoration(todoItemDecoration)
