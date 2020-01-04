@@ -70,16 +70,9 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         //todo handler result code
         if(requestCode==2)
         {
-            val tId = data.getLongExtra("tId", 0L)
-            val todo = Todo(
-                    data.getStringExtra("name"),
-                    data.getStringExtra("start").toLong(),
-                    data.getStringExtra("end").toLong(),
-                    data.getStringExtra("tag"),
-                    tId
-                    )
+            val todo = data.getParcelableExtra<Todo>("todo")
 
-            if(tId == 0L) {
+            if(todo.tId == 0L) {
                 val tId = todoDatabase?.getTodoDao()?.saveTodo(todo)
                 todo.tId = tId!!
                 todoAdapter?.saveTodo(todo)

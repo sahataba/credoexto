@@ -4,8 +4,6 @@ import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverter
-import android.arch.persistence.room.migration.Migration
 import android.content.Context
 import com.example.emmanuelozibo.todolistapp.data.local.models.Todo
 import java.util.concurrent.Executors

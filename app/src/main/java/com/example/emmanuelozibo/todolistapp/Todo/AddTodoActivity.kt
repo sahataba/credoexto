@@ -27,44 +27,39 @@ class AddTodoActivity: AppCompatActivity() {
             add_todo.setOnClickListener{
 
                 val todo = Todo(
-                        name_ed.text.toString(),
-                        start_ed.text.toString().toLong(),
-                        end_ed.text.toString().toLong(),
-                        tag_ed.text.toString()
-                        )
+                    name_ed.text.toString(),
+                    start_ed.text.toString().toLong(),
+                    end_ed.text.toString().toLong(),
+                    tag_ed.text.toString()
+                )
 
                 val intent = Intent()
-                intent.putExtra("name", todo.name)
-                intent.putExtra("start", todo.start.toString())
-                intent.putExtra("end", todo.end.toString())
-                intent.putExtra("tag", todo.tag)
-                intent.putExtra("tId", 0L)
+                intent.putExtra("todo", todo)
 
                 setResult(2,intent)
                 finish()
             }
         }else{
+
             add_todo.text = getString(R.string.update)
+
             val item = todoDatabase!!.getTodoDao().getTodoItem(tId)
             name_ed.setText(item.name)
             start_ed.setText(item.start.toString())
             end_ed.setText(item.end.toString())
             tag_ed.setText(item.tag)
+
             add_todo.setOnClickListener {
                 val todo = Todo(
-                        name_ed.text.toString(),
-                        start_ed.text.toString().toLong(),
-                        end_ed.text.toString().toLong(),
-                        tag_ed.text.toString(),
-                        tId
+                    name_ed.text.toString(),
+                    start_ed.text.toString().toLong(),
+                    end_ed.text.toString().toLong(),
+                    tag_ed.text.toString(),
+                    tId
                 )
 
                 val intent = Intent()
-                intent.putExtra("name", todo.name)
-                intent.putExtra("start", todo.start.toString())
-                intent.putExtra("end", todo.end.toString())
-                intent.putExtra("tag", todo.tag)
-                intent.putExtra("tId", todo.tId)
+                intent.putExtra("todo", todo)
 
                 setResult(2,intent)
                 finish()

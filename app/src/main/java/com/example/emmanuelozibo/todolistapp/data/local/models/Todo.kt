@@ -3,8 +3,11 @@ package com.example.emmanuelozibo.todolistapp.data.local.models
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 
+@Parcelize
 @Entity(tableName = "todo")
 class Todo(
         @ColumnInfo(name = "name")
@@ -15,4 +18,4 @@ class Todo(
         var end: Long = 0,
         @ColumnInfo(name = "tag")
         var tag: String = "",
-        @PrimaryKey(autoGenerate = true) var tId: Long = 0)
+        @PrimaryKey(autoGenerate = true) var tId: Long = 0) : Parcelable
