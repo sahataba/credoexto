@@ -24,6 +24,8 @@ abstract class TodoListDatabase: RoomDatabase(){
         val databaseName = "tododatabase"
         var todoListDatabase: TodoListDatabase? = null
 
+        val initialData = (1..24).map { id -> Todo("item $id", 1, 2, "", 0) }
+
         fun getInstance(context: Context): TodoListDatabase?{
             if (todoListDatabase == null){
                 todoListDatabase = Room.databaseBuilder(context,
@@ -31,10 +33,12 @@ abstract class TodoListDatabase: RoomDatabase(){
                         TodoListDatabase.databaseName)
                         .addCallback(object : Callback() {
                             override fun onCreate( db: SupportSQLiteDatabase) {
-                                super.onCreate(db);
+                                super.onCreate(db)
+                                //race condition with loading initial data from UI
                                 Executors.newSingleThreadScheduledExecutor().execute(object : Runnable {
                                     override fun run() {
-                                        getInstance(context)?.getTodoDao()?.saveTodo(Todo("prvi", 1, 2, "", 1))
+                                        val dao = getInstance(context)?.getTodoDao()
+                                        initialData.forEach{todo -> dao?.saveTodo(todo)}
                                     }
                                 })
                             }
