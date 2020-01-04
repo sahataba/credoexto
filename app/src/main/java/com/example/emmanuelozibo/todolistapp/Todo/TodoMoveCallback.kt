@@ -11,6 +11,7 @@ class DragDropHandler(val adapter: TodoAdapter, dragDirs : Int, swipeDirs : Int)
         return true
     }
 
+    //todo disable swipe
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         return
     }

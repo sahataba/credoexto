@@ -26,7 +26,7 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
 
         val list = todoDatabase?.getTodoDao()?.getTodoList()
         val arrayList: ArrayList<Todo> = ArrayList<Todo>(list!!.size)
-        arrayList.addAll(list)
+        arrayList.addAll(list)//todo: extra transformation
 
         todoAdapter = TodoAdapter(arrayList)
         todoAdapter?.setTodoItemClickedListener(this)
@@ -35,6 +35,7 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
         todo_rv.layoutManager = LinearLayoutManager(this)
         todo_rv.hasFixedSize()
 
+        //todo: bug with reordering only by 1 position
         val dragAndDrop = ItemTouchHelper(DragDropHandler(todoAdapter!!, ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), ItemTouchHelper.LEFT))
         val todoItemDecoration = TodoItemDecoration()
 
@@ -67,7 +68,7 @@ class TodoActivity : AppCompatActivity(), TodoAdapter.OnTodoItemClickedListener 
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        //todo handler result code
+        //todo: handle result code
         if(requestCode==2)
         {
             val todo = data.getParcelableExtra<Todo>("todo")

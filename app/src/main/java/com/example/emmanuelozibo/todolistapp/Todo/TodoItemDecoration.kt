@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
+//todo: unsafe access by !!
 class TodoItemDecoration : RecyclerView.ItemDecoration() {
     override fun onDrawOver(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.onDraw(c, parent, state)
@@ -19,7 +20,7 @@ class TodoItemDecoration : RecyclerView.ItemDecoration() {
 
         val adapter = parent.adapter as TodoAdapter
 
-        val windowStartX = 800f
+        val windowStartX = 800f//todo: better screen size handling
         val windowEndX = 900f
 
         val tags = adapter.getTags()
@@ -40,11 +41,11 @@ class TodoItemDecoration : RecyclerView.ItemDecoration() {
 
             val startView: View? = parent.getChildAt(0)
 
-            val padd = startView?.y!!
+            val padding = startView?.y!!
 
             val h: Float = ((startView?.measuredHeight)?.toFloat()) ?: 0f
-            val sY = h * (start - startI) + h/2 + padd
-            val eY = h * (end - startI) + h/2 + padd
+            val sY = h * (start - startI) + h/2 + padding
+            val eY = h * (end - startI) + h/2 + padding
 
 
             c?.drawLine(X, sY, X, eY,  paint)

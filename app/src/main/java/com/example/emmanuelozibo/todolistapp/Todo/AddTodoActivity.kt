@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_add_todo.*
 
 class AddTodoActivity: AppCompatActivity() {
 
-    private var todoDatabase: TodoListDatabase? = null
+    private var todoDatabase: TodoListDatabase? = null //todo: remove dependency get start model via instant
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class AddTodoActivity: AppCompatActivity() {
 
             add_todo.text = getString(R.string.update)
 
-            val item = todoDatabase!!.getTodoDao().getTodoItem(tId)
+            val item = todoDatabase!!.getTodoDao().getTodoItem(tId)//todo: remove direct db call
             name_ed.setText(item.name)
             start_ed.setText(item.start.toString())
             end_ed.setText(item.end.toString())
@@ -61,7 +61,7 @@ class AddTodoActivity: AppCompatActivity() {
                 val intent = Intent()
                 intent.putExtra("todo", todo)
 
-                setResult(2,intent)
+                setResult(2,intent)//todo: constant for result codes
                 finish()
             }
         }
